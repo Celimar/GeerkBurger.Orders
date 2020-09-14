@@ -1,24 +1,26 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using GeekBurger.OrderApi.Extension;
+using GeekBurger.OrderApi.Repository;
+using GeekBurger.OrderApi.Service;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Newtonsoft.Json;
-
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace GeekBurger.OrderApi
 {
     public class Startup
     {
+        public static IConfiguration Configuration;
+        public IHostingEnvironment HostingEnvironment;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IHostingEnvironment env)
         {
             Configuration = configuration;
+            HostingEnvironment = env;
         }
-
-        public IConfiguration Configuration { get; }
 
 
         public void ConfigureServices(IServiceCollection services)
@@ -35,11 +37,16 @@ namespace GeekBurger.OrderApi
             });
 
             services.AddCors();
+            services.AddDbContext<OrderDbContext>(o => o.UseInMemoryDatabase("geekburger-orders-v2"));
+            services.AddScoped<IStoreRepository, StoreRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IPaymentRepository, PaymentRepository>();
+            services.AddScoped<IOrderService, OrderService>();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, OrderDbContext orderDbContext)
         {
-            if (env.IsDevelopment())
+            if (HostingEnvironment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
@@ -51,6 +58,19 @@ namespace GeekBurger.OrderApi
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint(@"/swagger/v1/swagger.json", "GeekBurguerOrder");
             });
+
+            using (var serviceScope = app
+                .ApplicationServices
+                .GetService<IServiceScopeFactory>()
+                .CreateScope())
+            {
+                var context = serviceScope.ServiceProvider.GetRequiredService<OrderDbContext>();
+                //context.Database.Migrate();
+                context.Database.EnsureCreated();
+            }
+
+            orderDbContext.Seed();
+
         }
     }
 }

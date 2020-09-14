@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>GeekBurger.Order.Contracts</id>
+    <version>1.0.1</version>
+    <authors>GeekBurger.Order.Contracts</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Package Description</description>
+    <dependencies>
+      <group targetFramework=".NETCoreApp2.1" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\bin\Release\netcoreapp2.1\GeekBurger.Order.Contracts.dll" target="lib\netcoreapp2.1\GeekBurger.Order.Contracts.dll" />
+  </files>
+</package>

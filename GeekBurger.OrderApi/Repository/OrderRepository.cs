@@ -1,74 +1,96 @@
-﻿using GeekBurger.Order.Contracts;
-using System.Collections.Generic;
-using Models = GeekBurger.OrderApi.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace GeekBurger.OrderApi.Repository
 {
     public class OrderRepository : IOrderRepository
     {
 
-        private List<Models.Order> _orders;
-
-        public OrderRepository()
+        private OrderDbContext _context;
+        public OrderRepository(OrderDbContext context)
         {
-            _orders = new List<Models.Order>();
+            _context = context;
         }
 
-        public List<Models.Order> GetList()
+        public Model.Order GetOrderByOrderId(int orderid)
         {
-            return _orders;
+            var orders = _context.Orders
+                    .Where(order => order.OrderId.Equals(orderid))
+                //    .Include(order => order)
+                    .FirstOrDefault()
+                    ;
+            return orders;
         }
 
-        public Models.Order FindByOrderId(int orderid)
+//        public Model.Order Insert(NewOrder newOrder)
+//        {
+//            if (GetOrderByOrderId(newOrder.OrderId) == null)
+//            {
+//                throw new System.Exception("Já existe ordem cadastrada com esse Id");
+//            }
+
+//            Model.Order Order = new Model.Order()
+//            {
+//                OrderId = newOrder.OrderId,
+////                StoreName = newOrder.StoreName,
+//                Total = newOrder.Total,
+////                Products = newOrder.Products,
+////                ProductionIds = newOrder.ProductionIds,
+//                State = OrderState.New
+//            };
+
+//            _orders.Add(Order);
+//            return Order;
+//        }
+
+        //public Model.Order Update(OrderChanged orderChanged)
+        //{
+
+        //    Model.Order Order = GetOrderByOrderId(orderChanged.OrderId);
+        //    if (Order == null)
+        //    {
+        //        throw new System.Exception("Ordem não localizada com esse Id");
+        //    }
+
+        //    //Order.State = orderChanged.State;
+        //    //Order.StoreName = orderChanged.StoreName;
+
+        //    _orders.Add(Order);
+        //    return Order;
+        //}
+
+        public void AddPayment(Model.Payment payment)
         {
-            return _orders.Find(x => x.OrderId.Equals(orderid));
-        }
 
-        public Models.Order Insert(NewOrder newOrder)
-        {
-            if (FindByOrderId(newOrder.OrderId) == null)
-            {
-                throw new System.Exception("Já existe ordem cadastrada com esse Id");
-            }
-
-            Models.Order Order = new Models.Order()
-            {
-                OrderId = newOrder.OrderId,
-                StoreName = newOrder.StoreName,
-                Total = newOrder.Total,
-                Products = newOrder.Products,
-                ProductionIds = newOrder.ProductionIds,
-                State = "New"
-            };
-
-            _orders.Add(Order);
-            return Order;
-        }
-
-        public Models.Order Update(OrderChanged orderChanged)
-        {
-
-            Models.Order Order = FindByOrderId(orderChanged.OrderId);
+            Model.Order Order = GetOrderByOrderId(payment.OrderId);
             if (Order == null)
             {
                 throw new System.Exception("Ordem não localizada com esse Id");
             }
+            Order.Payments.Add(payment);
 
-            //Order.State = orderChanged.State;
-            Order.StoreName = orderChanged.StoreName;
-
-            _orders.Add(Order);
-            return Order;
         }
 
-        public void AddPayment(Payment payment)
+        public void Save()
         {
-            Models.Order Order = FindByOrderId(payment.OrderId);
-            if (Order == null)
-            {
-                throw new System.Exception("Ordem não localizada com esse Id");
-            }
-            Order.Payment = payment;
+            _context.SaveChanges();
+        }
+
+        public List<Model.Order> GetList()
+        {
+            return _context.Orders.ToList();
+        }
+
+        public void Insert(Model.Order order)
+        {
+            _context.Orders.Add(order);
+            _context.SaveChanges();
+        }
+
+        public void Update(Model.Order order)
+        {
+            _context.Orders.Update(order);
+            _context.SaveChanges();
         }
     }
 }

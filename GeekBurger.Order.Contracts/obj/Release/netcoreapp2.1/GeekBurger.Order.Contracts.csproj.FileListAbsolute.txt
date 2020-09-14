@@ -1,0 +1,8 @@
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\bin\Release\netcoreapp2.1\GeekBurger.Order.Contracts.deps.json
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\bin\Release\netcoreapp2.1\GeekBurger.Order.Contracts.dll
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\bin\Release\netcoreapp2.1\GeekBurger.Order.Contracts.pdb
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\obj\Release\netcoreapp2.1\GeekBurger.Order.Contracts.AssemblyInfoInputs.cache
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\obj\Release\netcoreapp2.1\GeekBurger.Order.Contracts.AssemblyInfo.cs
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\obj\Release\netcoreapp2.1\GeekBurger.Order.Contracts.csproj.CoreCompileInputs.cache
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\obj\Release\netcoreapp2.1\GeekBurger.Order.Contracts.dll
+C:\Users\celim\source\repos\fiap\microservices\GeekBurger.Order\GeekBurger.Order.Contracts\obj\Release\netcoreapp2.1\GeekBurger.Order.Contracts.pdb

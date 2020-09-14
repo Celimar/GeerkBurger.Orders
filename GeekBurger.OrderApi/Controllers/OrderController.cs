@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Threading.Tasks;
+using AutoMapper;
 using GeekBurger.Order.Contracts;
-using GeekBurger.OrderApi.Services;
+using GeekBurger.OrderApi.Service;
 using Microsoft.AspNetCore.Mvc;
-using Models = GeekBurger.OrderApi.Models;
 
 namespace GeekBurger.OrderApi.Controllers
 {
@@ -14,11 +14,13 @@ namespace GeekBurger.OrderApi.Controllers
     public class OrderController : ControllerBase
     {
 
-        private readonly IOrderService _orderService;
+        private IOrderService _orderService;
+        private IMapper _mapper;
 
-        public OrderController(IOrderService orderService)
+        public OrderController(IOrderService orderService, IMapper mapper)
         {
             _orderService = orderService;
+            _mapper = mapper;
         }
 
         [HttpGet("orders")]
@@ -42,17 +44,23 @@ namespace GeekBurger.OrderApi.Controllers
         [ProducesResponseType(200)]
         [ProducesResponseType(500)]
         [Consumes("application/json")]
-        public async Task<IActionResult> Pay(Payment payment)
+        public IActionResult Pay([FromBody] Payment payment)
         {
-            try
-            {
-                _orderService.ReceivePayment(payment);
-                return Ok();
-            }
-            catch
-            {
+            if (payment == null)
                 return StatusCode(500);
-            }
+
+            if (payment.OrderId <= 0)
+                return StatusCode(500);
+
+            Model.Payment newPayment = _mapper.Map<Model.Payment>(payment);
+
+            if (newPayment.StoreId == Guid.Empty)
+                return new Helper.UnprocessableEntityResult(ModelState);
+
+            _orderService.AddPayment(payment);
+
+            return StatusCode(200);
+
         }
     }
 }

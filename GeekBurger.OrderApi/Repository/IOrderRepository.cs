@@ -1,20 +1,21 @@
-﻿using GeekBurger.Order.Contracts;
-using Models = GeekBurger.OrderApi.Models;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace GeekBurger.OrderApi.Repository
 {
     public interface IOrderRepository
     {
 
-        List<Models.Order> GetList();
+        List<Model.Order> GetList();
 
-        Models.Order FindByOrderId(int orderid);
+        Model.Order GetOrderByOrderId(int orderid);
 
-        Models.Order Insert(NewOrder newOrder);
+        void Insert(Model.Order order);
 
-        Models.Order Update(OrderChanged orderChanged);
+        void Update(Model.Order order);
 
-        void AddPayment(Payment payment);
+        void AddPayment(Model.Payment payment);
+
+        void Save();
+
     }
 }

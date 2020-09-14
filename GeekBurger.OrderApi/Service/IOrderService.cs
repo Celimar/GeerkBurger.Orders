@@ -1,16 +1,16 @@
 ﻿using GeekBurger.Order.Contracts;
 using System.Collections.Generic;
 
-namespace GeekBurger.OrderApi.Services
+namespace GeekBurger.OrderApi.Service
 {
     public interface IOrderService
     {
 
-        List<Models.Order> GetList();
+        List<Model.Order> GetList();
 
         void ReceiveNewOrder(NewOrder newOrder);
 
-        void ReceivePayment(Payment payment);
+        void AddPayment(Payment payment);
 
         void ChangeOrder(OrderChanged orderChanged);
 
