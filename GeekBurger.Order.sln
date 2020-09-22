@@ -3,9 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekBurger.OrderApi", "GeekBurger.OrderApi\GeekBurger.OrderApi.csproj", "{247964C0-1DBF-4F77-A084-48F221E0BB49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GeekBurger.Order.Contracts", "GeekBurger.Order.Contracts\GeekBurger.Order.Contracts.csproj", "{02A0E79D-F480-4E31-9E4A-75F4D322F7A1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekBurger.Order.Contracts", "GeekBurger.Order.Contracts\GeekBurger.Order.Contracts.csproj", "{02A0E79D-F480-4E31-9E4A-75F4D322F7A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewOrderReceiver", "NewOrderReceiver\NewOrderReceiver.csproj", "{EFDC08EA-31AD-4D7A-BDDC-4F233AEC9DA2}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1} = {02A0E79D-F480-4E31-9E4A-75F4D322F7A1}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NewOrderSender", "NewOrderSender\NewOrderSender.csproj", "{27E26ED6-088D-4F85-8EEA-B518F47DF709}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1} = {02A0E79D-F480-4E31-9E4A-75F4D322F7A1}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GeekBurger.Order", "GeekBurger.Order\GeekBurger.Order.csproj", "{B5A8F26C-E251-419B-A5FB-3E6EADD0F0BA}"
+	ProjectSection(ProjectDependencies) = postProject
+		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1} = {02A0E79D-F480-4E31-9E4A-75F4D322F7A1}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +26,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{247964C0-1DBF-4F77-A084-48F221E0BB49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{247964C0-1DBF-4F77-A084-48F221E0BB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{247964C0-1DBF-4F77-A084-48F221E0BB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{247964C0-1DBF-4F77-A084-48F221E0BB49}.Release|Any CPU.Build.0 = Release|Any CPU
 		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02A0E79D-F480-4E31-9E4A-75F4D322F7A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EFDC08EA-31AD-4D7A-BDDC-4F233AEC9DA2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFDC08EA-31AD-4D7A-BDDC-4F233AEC9DA2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EFDC08EA-31AD-4D7A-BDDC-4F233AEC9DA2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFDC08EA-31AD-4D7A-BDDC-4F233AEC9DA2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{27E26ED6-088D-4F85-8EEA-B518F47DF709}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{27E26ED6-088D-4F85-8EEA-B518F47DF709}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{27E26ED6-088D-4F85-8EEA-B518F47DF709}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{27E26ED6-088D-4F85-8EEA-B518F47DF709}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5A8F26C-E251-419B-A5FB-3E6EADD0F0BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5A8F26C-E251-419B-A5FB-3E6EADD0F0BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5A8F26C-E251-419B-A5FB-3E6EADD0F0BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5A8F26C-E251-419B-A5FB-3E6EADD0F0BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
