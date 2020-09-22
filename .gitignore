@@ -338,4 +338,4 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
-/GeekBurger.Production/appsettings.json
+/GeekBurger.Order/appsettings.json
