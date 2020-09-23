@@ -17,7 +17,7 @@ namespace GeekBurger.Order.Model
         public Store Store { get; set; }
         public Guid StoreId { get; set; }
 
-        public List<Product> Product { get; set; }
+        public List<Product> Products { get; set; }
         
         public List<Payment> Payments { get; set; }
     }

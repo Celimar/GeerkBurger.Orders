@@ -14,16 +14,17 @@ namespace GeekBurger.Order.Service
         private readonly IOrderRepository _orderRepository;
         //private readonly IOrderChangedEventRepository _orderChangedEventRepository;
         private readonly IPaymentRepository _paymentRepository;
+        private readonly IOrderChangedService _orderChangedService;
 
         public OrderService(
-            //IOrderChangedEventRepository orderChangedEventRepository, 
             IOrderRepository orderRepository, 
             IPaymentRepository paymentRepository, 
+            IOrderChangedService orderChangedService,
             IMapper mapper)
         {
-            //_orderChangedEventRepository = orderChangedEventRepository;
             _orderRepository = orderRepository;
             _paymentRepository = paymentRepository;
+            _orderChangedService = orderChangedService;
             _mapper = mapper;
         }
 
@@ -57,19 +58,20 @@ namespace GeekBurger.Order.Service
                 order.Payments.Add(newPayment);
                 _orderRepository.AddPayment(newPayment);
                 _orderRepository.Save();
-            });
-            //TODO -notificar publish Order Changed
-        }
 
-        public async Task ReceiveNewOrder(NewOrder newOrder)
-        {
-            var order = _mapper.Map<Model.Order>(newOrder);
+                OrderChanged orderChanged = new OrderChanged()
+                {
+                    OrderId = order.OrderId,
+                    StoreName = order.Store.Name,
+                    State = "Paid"
+                };
 
-            await Task.Run(() =>
-            {
-                _orderRepository.Insert(order);
-                _orderRepository.Save();
+                //notificar publish Order Changed
+                _orderChangedService.SendMessagesAsync(orderChanged);
             });
+
+
+
         }
 
         public async Task<List<Model.OrderChangedEvent>> GetOrderChangedEventList()
@@ -87,7 +89,11 @@ namespace GeekBurger.Order.Service
         public async Task Insert(NewOrder newOrder)
         {
             var order = _mapper.Map<Model.Order>(newOrder);
+            await Insert(order);
+        }
 
+        public async Task Insert(Model.Order order)
+        {
             await Task.Run(() =>
             {
                 _orderRepository.Insert(order);

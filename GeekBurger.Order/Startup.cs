@@ -47,6 +47,7 @@ namespace GeekBurger.Order
             services.AddScoped<IStoreRepository, StoreRepository>();
 
             services.AddScoped<IOrderService, OrderService>();
+            services.AddScoped<IOrderChangedService, OrderChangedService>();
             services.AddScoped<IServiceBusService, ServiceBusService>();
 
             services.AddDbContext<OrderDbContext>(o => o.UseInMemoryDatabase("geekburger-orders"));

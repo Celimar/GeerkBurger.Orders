@@ -2,37 +2,38 @@
 using GeekBurger.Order.Contracts;
 using GeekBurger.Order.Repository;
 using GeekBurger.Order.Repository.Interfaces;
+using System.Collections.Generic;
 
 namespace GeekBurger.Order.Helper
 {
-    public class MatchOrderFromRepository : IMappingAction<Contracts.Payment, Model.Payment>
+    public class MatchOrderFromRepository : IMappingAction<NewOrder, Model.Order>
     {
         private IStoreRepository _storeRepository;
-        private IOrderRepository _orderRepository;
-        public MatchOrderFromRepository(IStoreRepository storeRepository, IOrderRepository orderRepository)
+        //private IProductRepository _productRepository;
+
+        public MatchOrderFromRepository(IStoreRepository storeRepository
+            //, IProductRepository productRepository
+            )
         {
             _storeRepository = storeRepository;
-            _orderRepository = orderRepository;
+            //_productRepository = productRepository;
         }
 
-        public void Process(Payment source, Model.Payment destination)
+        public void Process(NewOrder source, Model.Order destination)
         {
-            Model.Store store = _storeRepository.GetStoreByName(source.StoreName);
-            Model.Order order = _orderRepository.GetOrderByOrderId(source.OrderId);
+            var store = _storeRepository.GetStoreByName(source.StoreName);
+            //var prods = _productRepository.GetByIdList(source.ProductionIds);
 
-            if (store != null  && order != null)
+            if (store != null)
             {
-                destination.StoreId = store.StoreId;
-                destination.OrderId = order.OrderId;
-                //TODO:  verificar de map permite inserir item na lista do pai
-                //order.Payments.Add(destination);
-            }
+                destination.Store    = store;
+                destination.StoreId  = store.StoreId;
+                destination.State    = Model.OrderState.New;
+            };
+            destination.Products = null;
+            destination.Payments = null;
 
-        }
-
-        public void Process(Payment source, Model.Payment destination, ResolutionContext context)
-        {
-            throw new System.NotImplementedException();
+            destination.Products = new List<Model.Product>();
         }
     }
 }

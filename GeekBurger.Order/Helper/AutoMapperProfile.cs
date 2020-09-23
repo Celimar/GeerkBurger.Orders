@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using GeekBurger.Order.Contracts;
-using GeekBurger.Order.Model;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace GeekBurger.Order.Helper
@@ -9,20 +8,34 @@ namespace GeekBurger.Order.Helper
     {
         public AutoMapperProfile()
         {
-            CreateMap<NewOrder, Model.Order>().AfterMap<MatchStoreFromRepository>();
-            CreateMap<Contracts.Payment, Model.Payment>().AfterMap<MatchOrderFromRepository>();
+            CreateMap<NewOrder, Model.Order>()
+                .AfterMap<MatchOrderFromRepository>();
 
-            CreateMap<EntityEntry<Model.Order>, OrderChangedMessage>()
-                .ForMember(
-                    dest => dest.OrderId,
-                    opt => opt.MapFrom(src => src.Entity)
-                );
-            CreateMap<EntityEntry<Model.Order>, OrderChangedEvent>()
-                .ForMember(
-                    dest => dest.Order,
-                    opt => opt.MapFrom(src => src.Entity)
-                );
+            CreateMap<Payment, Model.Payment>()
+                .AfterMap<MatchPaymentFromRepository>();
 
+            CreateMap<EntityEntry<Product>, Model.Product>()
+                .ForMember(
+                    dest => dest.ProductId,
+                    opt => opt.AllowNull()
+                ); ;
+
+            //CreateMap<EntityEntry<Store>, Model.Store>()
+            //    .ForMember(
+            //        opt => opt.Ignore()
+            //    );
+
+            //CreateMap<EntityEntry<OrderChangedMessage>, Model.Order>()
+            //    .ForMember(
+            //        dest => dest.OrderId,
+            //        opt => opt.Ignore()
+            //    );
+
+            //CreateMap<EntityEntry<OrderChangedEvent>, Model.Order>()
+            //    .ForMember(
+            //        dest => dest.Order,
+            //        opt => opt.Ignore()
+            //    );
 
         }
     }

@@ -25,6 +25,8 @@ namespace GeekBurger.Order.Service.Interfaces
 
         Task Insert(NewOrder newOrder);
 
+        Task Insert(Model.Order order);
+
         Task AddPayment(Payment payment);
 
         Task ChangeOrder(OrderChanged orderChanged);

@@ -75,7 +75,7 @@ namespace GeekBurger.Order.Service
                 messageString = Encoding.UTF8.GetString(message.Body);
 
             var newOrder = JsonConvert.DeserializeObject<NewOrder>(messageString);
-
+            
             _orderService.Insert(newOrder);
 
             return Task.CompletedTask;

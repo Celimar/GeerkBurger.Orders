@@ -10,7 +10,7 @@ namespace GeekBurger.Order.Service
 {
     public static class ServiceBusNamespaceExtension
     {
-        private const string SubscriptionName = "Sub_ProductionAreaChanged";
+        private const string SubscriptionName = "Sub_OrderChanged";
 
         public static IServiceBusNamespace GetServiceBusNamespace(this IConfiguration configuration)
         {

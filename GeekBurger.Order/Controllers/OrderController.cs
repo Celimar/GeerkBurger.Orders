@@ -95,5 +95,33 @@ namespace GeekBurger.Order.Controllers
 
             return StatusCode(200);
         }
+
+        [HttpPost("neworder")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(500)]
+        [Consumes("application/json")]
+        public async Task<ActionResult> NewOrderForTest([FromBody] NewOrder newOrder)
+        {
+            if (newOrder == null)
+                return StatusCode(500);
+
+            if (newOrder.OrderId <= 0)
+                return StatusCode(500);
+
+            if (String.IsNullOrEmpty(newOrder.StoreName))
+                return StatusCode(500);
+
+            Model.Order order = _mapper.Map<Model.Order>(newOrder);
+
+            if (order.Store == null)
+                return new Helper.UnprocessableEntityResult(ModelState);
+
+            if (order.Store.StoreId == Guid.Empty)
+                return new Helper.UnprocessableEntityResult(ModelState);
+
+            await _orderService.Insert(order);
+
+            return StatusCode(200);
+        }
     }
 }
